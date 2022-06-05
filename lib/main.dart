@@ -1,7 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:def_i18n/state/locale_state.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'common.dart';
+import 'screens/screens.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -9,24 +13,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('i18n  App'),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text('Hello World')
-            ],
+    return Consumer(
+      builder: (context, ref, child) {
+        final Locale? currentLocale = ref.watch(localeStateProvider);
+
+        return MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: currentLocale,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
           ),
-        ),
-      ),
+          home: const HomeScreen()
+        );
+      },
+      // child: MaterialApp(
+      //   localizationsDelegates: AppLocalizations.localizationsDelegates,
+      //   supportedLocales: AppLocalizations.supportedLocales,
+      //   title: 'Flutter Demo',
+      //   theme: ThemeData(
+      //     primarySwatch: Colors.blue,
+      //   ),
+      //   home: const HomeScreen()
+      // ),
     );
   }
 }

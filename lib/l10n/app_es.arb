@@ -1,0 +1,5 @@
+{ 
+  "@@locale": "es",
+  "language": "Español",
+  "helloWorld": "¡Hola Mundo!"
+}
